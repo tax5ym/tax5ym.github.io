@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAX5</title>
+    <meta name="description" content="Tu mejor opción">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" href="/icon-apple.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <style>
+        :root {
+            --background: 0 0% 3.9%;
+            --foreground: 0 0% 98%;
+            --card: 0 0% 3.9%;
+            --card-foreground: 0 0% 98%;
+            --popover: 0 0% 3.9%;
+            --popover-foreground: 0 0% 98%;
+            --primary: 22 100% 50%;
+            --primary-foreground: 0 0% 9%;
+            --secondary: 0 0% 14.9%;
+            --secondary-foreground: 0 0% 98%;
+            --muted: 0 0% 14.9%;
+            --muted-foreground: 0 0% 63.9%;
+            --accent: 22 100% 50%;
+            --accent-foreground: 0 0% 98%;
+            --destructive: 0 62.8% 30.6%;
+            --destructive-foreground: 0 0% 98%;
+            --border: 0 0% 14.9%;
+            --input: 0 0% 14.9%;
+            --ring: 22 100% 60%;
+            --radius: 0.5rem;
+        }
+
+        .light {
+            --background: 0 0% 100%;
+            --foreground: 0 0% 3.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 0 0% 3.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 0 0% 3.9%;
+            --primary: 22 100% 50%;
+            --primary-foreground: 0 0% 98%;
+            --secondary: 0 0% 96.1%;
+            --secondary-foreground: 0 0% 9%;
+            --muted: 0 0% 96.1%;
+            --muted-foreground: 0 0% 45.1%;
+            --accent: 22 100% 50%;
+            --accent-foreground: 0 0% 9%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 0 0% 98%;
+            --border: 0 0% 89.8%;
+            --input: 0 0% 89.8%;
+            --ring: 22 100% 50%;
+        }
+
+        * {
+            border-color: hsl(var(--border));
+        }
+
+        body {
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .font-headline {
+            font-family: 'Audiowide', cursive;
+        }
+
+        .font-body {
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.6);
+        }
+
+        /* Animaciones */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(15px) rotate(-180deg); }
+        }
+
+        .animate-fade-in-down {
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .animate-float {
+            animation: float 30s ease-in-out infinite;
+        }
+
+        .animate-float2 {
+            animation: float2 35s ease-in-out infinite;
+        }
+
+        /* Splash Screen */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .splash-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
+
+        /* Background futurista */
+        .futuristic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(45deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
+        }
+
+        .futuristic-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        /* Botones */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid hsl(var(--primary) / 0.5);
+            background: transparent;
+            backdrop-filter: blur(10px);
+            color: hsl(var(--primary));
+            height: 5rem;
+            width: 100%;
+            max-width: 28rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: hsl(var(--primary) / 0.2);
+            border-color: hsl(var(--primary));
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, hsl(var(--primary)), hsl(var(--accent)));
+            border: none;
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+            background: linear-gradient(45deg, hsl(var(--primary)), hsl(var(--accent)));
+        }
+
+        .btn-destructive {
+            background: rgba(220, 38, 38, 0.5);
+            border-color: rgba(220, 38, 38, 0.5);
+            color: white;
+        }
+
+        .btn-destructive:hover {
+            background: rgba(220, 38, 38, 0.7);
+            border-color: rgba(220, 38, 38, 0.7);
+        }
+
+        /* Accordion */
+        .accordion {
+            width: 100%;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .accordion-trigger {
+            width: 100%;
+            padding: 1rem 0;
+            background: none;
+            border: none;
+            text-align: left;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: hsl(var(--foreground));
+            cursor: pointer;
+        }
+
+        .accordion-content {
+            padding: 0 0 1rem 0;
+            color: hsl(var(--muted-foreground));
+            display: none;
+        }
+
+        .accordion-content.show {
+            display: block;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem;
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            display: none;
+            max-width: 300px;
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        /* Theme Grid */
+        .theme-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .theme-button {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .theme-button.active {
+            box-shadow: 0 0 0 2px white;
+        }
+
+        .theme-button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <video id="splash-video-element" autoplay muted playsinline class="splash-video">
+            <source src="/splash.mp4" type="video/mp4">
+            Tu navegador no soporta el video.
+        </video>
+    </div>
+
+    <main class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden p-4 text-center animate-fade-in-down">
+        <!-- Background Futurista -->
+        <div class="futuristic-bg" id="futuristic-bg">
+            <!-- Los elementos SVG se agregan dinámicamente -->
+        </div>
+        
+        <div class="relative z-10 flex flex-col items-center justify-center">
+            <header class="mb-12">
+                <h1 class="font-headline text-6xl md:text-8xl lg:text-9xl font-bold tracking-widest text-white text-glow">
+                    TAX5
+                </h1>
+                <p class="mt-2 font-headline text-xl font-semibold tracking-wider text-white">
+                    Tu mejor opción
+                </p>
+                <p class="mt-4 max-w-lg font-body text-lg text-white/80">
+                    Servicio de taxi a toda la Gran Caracas. Tarifa única de 5$ a tasa BCV.
+                </p>
+                <p class="mt-2 max-w-lg font-body text-sm text-white/60">
+                    (ciertas condiciones aplican)
+                </p>
+            </header>
+
+            <!-- Botones de la App -->
+            <div class="flex w-full flex-col items-center space-y-4" id="app-buttons">
+                <!-- Los botones se generan dinámicamente -->
+            </div>
+
+            <!-- Botones adicionales -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-4" id="additional-buttons">
+                <!-- Los botones se generan dinámicamente -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para Guía de Uso -->
+    <div id="guide-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex items-center gap-2 mb-4">
+                <h2 class="font-headline text-2xl text-primary">📄 Guía de Uso</h2>
+            </div>
+            <p class="text-foreground/80 mb-4 text-base">Cómo usar la aplicación TAX5:</p>
+            
+            <div class="accordion" id="guide-accordion">
+                <!-- Los items del accordion se generan dinámicamente -->
+            </div>
+            
+            <button onclick="closeModal('guide-modal')" class="btn w-full mt-4">
+                Cerrar
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal para Compartir App -->
+    <div id="share-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex items-center gap-2 mb-4">
+                <h2 class="font-headline text-2xl text-primary">📱 Compartir TAX5</h2>
+            </div>
+            <p class="text-foreground/80 mb-4 text-base">¡Comparte la app con tus amigos!</p>
+            
+            <div class="flex flex-col items-center justify-center gap-6 py-4">
+                <div id="qr-code-container" class="bg-black p-4 rounded-lg border-2 border-primary/50">
+                    <!-- QR Code se genera dinámicamente -->
+                </div>
+                <p class="text-sm text-muted-foreground">
+                    Escanea el código QR para abrir la app.
+                </p>
+            </div>
+            
+            <button onclick="handleShare()" class="btn btn-primary w-full mb-2">
+                📤 Compartir Enlace
+            </button>
+            <button onclick="closeModal('share-modal')" class="btn w-full">
+                Cerrar
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal para Redes Sociales -->
+    <div id="socials-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex items-center gap-2 mb-4">
+                <h2 class="font-headline text-2xl text-primary">🔗 Redes Sociales</h2>
+            </div>
+            <p class="text-foreground/80 mb-4 text-base">¡Síguenos para no perderte ninguna novedad!</p>
+            
+            <div class="flex flex-col gap-4 py-4">
+                <a href="https://www.instagram.com/tax5tumejoropcion" target="_blank" class="btn">
+                    📷 Instagram
+                </a>
+                <a href="https://www.tiktok.com/@tax5tumejoropcion" target="_blank" class="btn">
+                    🎵 TikTok
+                </a>
+                <a href="https://www.facebook.com/taxcincotumejoropcion" target="_blank" class="btn">
+                    👍 Facebook
+                </a>
+            </div>
+            
+            <button onclick="closeModal('socials-modal')" class="btn w-full">
+                Cerrar
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal para cambiar fondo -->
+    <div id="image-manager-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-lg font-semibold mb-4">🖼️ Cambiar Fondo</h3>
+            <input type="file" id="background-upload" accept="image/*" class="mb-4 w-full p-2 border rounded" />
+            <button onclick="uploadImage()" class="btn btn-primary w-full mb-2">Subir Imagen</button>
+            <button onclick="removeImage()" class="btn btn-destructive w-full mb-2" id="remove-image-btn" style="display: none;">
+                🗑️ Restaurar Fondo
+            </button>
+            <button onclick="closeModal('image-manager-modal')" class="btn w-full">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Modal para cambiar tema -->
+    <div id="theme-switcher-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-lg font-semibold mb-4">🎨 Cambiar Tema</h3>
+            <p class="text-foreground/80 mb-4 text-base">Elige el color principal de la interfaz.</p>
+            
+            <div class="theme-grid" id="theme-grid">
+                <!-- Los temas se generan dinámicamente -->
+            </div>
+            
+            <button onclick="closeModal('theme-switcher-modal')" class="btn w-full mt-4">
+                Cerrar
+            </button>
+        </div>
+    </div>
+
+    <!-- Alert Dialog -->
+    <div id="alert-dialog" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex items-center gap-2 mb-4">
+                <h2 class="text-xl font-semibold">🎁 ¡Felicidades, Campeón!</h2>
+            </div>
+            <p class="text-foreground/80 mb-4">
+                Has demostrado tu habilidad y completado el desafío. ¡Como premio, aquí tienes un cupón para tu próximo viaje! (Función de premio en desarrollo).
+            </p>
+            <button onclick="closeModal('alert-dialog')" class="btn btn-primary w-full">
+                ¡Genial!
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+        <div id="toast-content"></div>
+    </div>
+
+    <script>
+        // Configuración de la app
+        const appConfig = {
+            appName: 'TAX5',
+            appSlogan: 'Tu mejor opción',
+            mainDescription: 'Servicio de taxi a toda la Gran Caracas. Tarifa única de 5$ a tasa BCV.',
+            disclaimer: '(ciertas condiciones aplican)',
+            phoneNumber: '+584226442817',
+            whatsappNumber: '584226442817',
+            whatsappMessage: 'Hola, necesito un taxi.',
+            shareMessage: 'Usa TAX5 para pedir tu taxi de forma rápida y segura.',
+            prizeMessage: 'Has demostrado tu habilidad y completado el desafío. ¡Como premio, aquí tienes un cupón para tu próximo viaje! (Función de premio en desarrollo).'
+        };
+
+        // Guía de uso
+        const usageGuide = [
+            {
+                id: '1',
+                stepNumber: 1,
+                title: 'Instala la App en tu Móvil',
+                instructionText: 'Para una experiencia más rápida, instala TAX5 en tu pantalla de inicio. En Android (Chrome): Toca el menú (⋮) y luego "Instalar aplicación". En iOS (Safari): Toca el ícono de Compartir (↑) y luego "Agregar a la pantalla de inicio".',
+                icon: '📥'
+            },
+            {
+                id: '8',
+                stepNumber: 2,
+                title: 'Comunicación sin Conexión',
+                instructionText: 'Te recomendamos guardar nuestro número de TAX5 en tus contactos. De esta manera, si en algún momento no dispones de conexión a internet, siempre podrás solicitarnos un servicio a través de una llamada telefónica tradicional.',
+                icon: '📞'
+            },
+            {
+                id: '2',
+                stepNumber: 3,
+                title: 'Pide un Taxi Rápido',
+                instructionText: 'Usa los botones "Llamar a TAX5" o "TAX5 WhatsApp" para contactar a un conductor inmediatamente.',
+                icon: '🚕'
+            },
+            {
+                id: '9',
+                stepNumber: 4,
+                title: 'Síguenos en Redes',
+                instructionText: 'Presiona el botón "Redes Sociales" para acceder a nuestros perfiles en Instagram, TikTok y Facebook. ¡No te pierdas ninguna novedad!',
+                icon: '🔗'
+            },
+            {
+                id: '4',
+                stepNumber: 5,
+                title: 'Comparte la App',
+                instructionText: 'Usa el botón "Compartir app" para enviar un enlace directo o mostrar un código QR a tus amigos.',
+                icon: '📤'
+            },
+            {
+                id: '3',
+                stepNumber: 6,
+                title: 'Calcula tu Viaje',
+                instructionText: 'Usa la calculadora para estimar el costo de tu viaje. Para el origen, puedes escribir una dirección, seleccionarla de la lista o usar tu ubicación actual con el botón "GPS". Para el destino, simplemente escribe la dirección o selecciónala de la lista de sugerencias.',
+                icon: '🧮'
+            },
+            {
+                id: '6',
+                stepNumber: 7,
+                title: 'Personaliza tu Experiencia',
+                instructionText: 'Toca en "Personaliza tu fondo" o "Cambiar Tema" para ajustar la apariencia de la aplicación a tu gusto.',
+                icon: '🎨'
+            },
+            {
+                id: '7',
+                stepNumber: 8,
+                title: 'Danos tu Opinión',
+                instructionText: 'Tu feedback es valioso. Usa el "Buzón de Sugerencias" para calificar nuestro servicio y dejarnos tus comentarios. ¡Ahora con IA para analizar tu opinión!',
+                icon: '📝'
+            },
+            {
+                id: '5',
+                stepNumber: 9,
+                title: 'Diviértete un Rato',
+                instructionText: 'Presiona "Jugar" para acceder a nuestra Zona de Juegos y pasar el tiempo mientras esperas.',
+                icon: '🎮'
+            }
+        ];
+
+        // Temas disponibles
+        const themes = [
+            { name: 'Naranja Neón', primary: { h: 22, s: 100, l: 50 } },
+            { name: 'Azul Eléctrico', primary: { h: 217, s: 91, l: 60 } },
+            { name: 'Verde Matrix', primary: { h: 142, s: 71, l: 45 } },
+            { name: 'Magenta Cyber', primary: { h: 291, s: 87, l: 60 } },
+            { name: 'Amarillo Volt', primary: { h: 53, s: 98, l: 50 } },
+            { name: 'Rojo Alerta', primary: { h: 0, s: 84, l: 60 } },
+        ];
+
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            // Manejar splash screen
+            initializeSplashScreen();
+            
+            // Crear botones de la app
+            createAppButtons();
+            
+            // Crear botones adicionales
+            createAdditionalButtons();
+            
+            // Crear guía de uso
+            createUsageGuide();
+            
+            // Crear QR code
+            createQRCode();
+            
+            // Crear temas
+            createThemes();
+            
+            // Crear background futurista
+            createFuturisticBackground();
+            
+            // Cargar tema guardado
+            const savedThemeName = localStorage.getItem('app-theme') || 'Naranja Neón';
+            const savedTheme = themes.find(t => t.name === savedThemeName) || themes[0];
+            applyTheme(savedTheme);
+            
+            // Cargar fondo personalizado
+            loadCustomBackground();
+            
+            // Inicializar Lucide icons
+            lucide.createIcons();
+        }
+
+        function initializeSplashScreen() {
+            const splashScreen = document.getElementById('splash-screen');
+            const video = document.getElementById('splash-video-element');
+
+            if (video) {
+                video.onended = function() {
+                    hideSplashScreen();
+                };
+                
+                video.oncanplay = function() {
+                    video.play().catch(function(error) {
+                        console.log("Autoplay prevenido, ocultando splash screen");
+                        hideSplashScreen();
+                    });
+                };
+
+                // Ocultar splash screen después de 3 segundos como fallback
+                setTimeout(hideSplashScreen, 3000);
+            } else {
+                hideSplashScreen();
+            }
+        }
+
+        function hideSplashScreen() {
+            const splashScreen = document.getElementById('splash-screen');
+            if (splashScreen) {
+                splashScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                }, 1000);
+            }
+        }
+
+        function createAppButtons() {
+            const appButtonsContainer = document.getElementById('app-buttons');
+            
+            const buttons = [
+                {
+                    text: '📄 Guía de uso',
+                    onClick: () => openModal('guide-modal'),
+                    icon: '📄'
+                },
+                {
+                    text: '📞 Llamar a TAX5',
+                    onClick: () => callTaxi(),
+                    icon: '📞',
+                    isLink: true,
+                    href: `tel:${appConfig.phoneNumber}`
+                },
+                {
+                    text: '💬 TAX5 WhatsApp',
+                    onClick: () => openWhatsApp(),
+                    icon: '💬',
+                    isLink: true,
+                    href: `https://wa.me/${appConfig.whatsappNumber}?text=${encodeURIComponent(appConfig.whatsappMessage)}`
+                },
+                {
+                    text: '🔗 Redes Sociales',
+                    onClick: () => openModal('socials-modal'),
+                    icon: '🔗'
+                },
+                {
+                    text: '📱 Compartir app',
+                    onClick: () => openModal('share-modal'),
+                    icon: '📱'
+                },
+                {
+                    text: '🧮 Calcula tu viaje TAX5',
+                    onClick: () => showToast('Calculadora en desarrollo', 'info'),
+                    icon: '🧮'
+                },
+                {
+                    text: '🎮 Jugar',
+                    onClick: () => showToast('Zona de juegos en desarrollo', 'info'),
+                    icon: '🎮'
+                },
+                {
+                    text: '📝 Buzón de Sugerencias',
+                    onClick: () => showToast('Buzón de sugerencias en desarrollo', 'info'),
+                    icon: '📝'
+                },
+                {
+                    text: '👤 Registrarme',
+                    onClick: () => showToast('Registro en desarrollo', 'info'),
+                    icon: '👤'
+                }
+            ];
+
+            buttons.forEach(button => {
+                if (button.isLink) {
+                    const link = document.createElement('a');
+                    link.href = button.href;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    link.className = 'btn';
+                    link.innerHTML = `${button.icon} ${button.text}`;
+                    link.onclick = button.onClick;
+                    appButtonsContainer.appendChild(link);
+                } else {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn';
+                    btn.innerHTML = `${button.icon} ${button.text}`;
+                    btn.onclick = button.onClick;
+                    appButtonsContainer.appendChild(btn);
+                }
+            });
+        }
+
+        function createAdditionalButtons() {
+            const additionalButtonsContainer = document.getElementById('additional-buttons');
+            
+            const buttons = [
+                {
+                    text: '🖼️ Personaliza tu fondo',
+                    onClick: () => openModal('image-manager-modal'),
+                    icon: '🖼️'
+                },
+                {
+                    text: '🎨 Cambiar Tema',
+                    onClick: () => openModal('theme-switcher-modal'),
+                    icon: '🎨'
+                }
+            ];
+
+            buttons.forEach(button => {
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.innerHTML = `${button.icon} ${button.text}`;
+                btn.onclick = button.onClick;
+                additionalButtonsContainer.appendChild(btn);
+            });
+        }
+
+        function createUsageGuide() {
+            const accordionContainer = document.getElementById('guide-accordion');
+            
+            usageGuide.sort((a, b) => a.stepNumber - b.stepNumber).forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'accordion-item';
+                itemElement.innerHTML = `
+                    <button class="accordion-trigger" onclick="toggleAccordion(${index})">
+                        <span>${item.icon} ${item.title}</span>
+                        <span>+</span>
+                    </button>
+                    <div class="accordion-content" id="accordion-content-${index}">
+                        ${item.instructionText}
+                    </div>
+                `;
+                accordionContainer.appendChild(itemElement);
+            });
+        }
+
+        function createQRCode() {
+            const currentUrl = window.location.href;
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl)}&bgcolor=000000&color=FFFFFF&qzone=1`;
+            
+            const qrContainer = document.getElementById('qr-code-container');
+            if (qrContainer) {
+                const img = document.createElement('img');
+                img.src = qrCodeUrl;
+                img.alt = 'QR Code para compartir la app TAX5';
+                img.width = 200;
+                img.height = 200;
+                qrContainer.appendChild(img);
+            }
+        }
+
+        function createThemes() {
+            const themeGrid = document.getElementById('theme-grid');
+            
+            themes.forEach((theme, index) => {
+                const button = document.createElement('button');
+                button.className = 'theme-button';
+                button.style.backgroundColor = `hsl(${theme.primary.h}, ${theme.primary.s}%, ${theme.primary.l}%)`;
+                button.innerHTML = `
+                    <span>${theme.name}</span>
+                    <span id="check-${index}" style="display: none;">✓</span>
+                `;
+                button.onclick = () => handleThemeSelect(theme);
+                themeGrid.appendChild(button);
+            });
+        }
+
+        function createFuturisticBackground() {
+            const bgContainer = document.getElementById('futuristic-bg');
+            
+            // SVG principal
+            const svg1 = document.createElement('svg');
+            svg1.viewBox = '0 0 1000 400';
+            svg1.className = 'w-full h-auto max-w-4xl absolute opacity-20 animate-float';
+            svg1.style.animationDuration = '30s';
+            svg1.innerHTML = `
+                <defs>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+                        <feMerge>
+                            <feMergeNode in="coloredBlur" />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                </defs>
+                <text x="50%" y="50%" dy=".35em" text-anchor="middle" class="font-headline font-bold"
+                      font-size="200" fill="none" stroke="hsl(var(--primary))" stroke-width="1" style="filter: url(#glow)">
+                    TAX5
+                </text>
+            `;
+            
+            // SVG secundario
+            const svg2 = document.createElement('svg');
+            svg2.viewBox = '0 0 1000 400';
+            svg2.className = 'w-full h-auto max-w-2xl absolute opacity-10 animate-float2';
+            svg2.style.animationDuration = '35s';
+            svg2.style.animationDelay = '-5s';
+            svg2.innerHTML = `
+                <text x="50%" y="50%" dy=".35em" text-anchor="middle" class="font-headline font-bold"
+                      font-size="200" fill="none" stroke="hsl(var(--primary))" stroke-width="1" style="filter: url(#glow)">
+                    TAX5
+                </text>
+            `;
+            
+            // Gradiente radial
+            const gradient = document.createElement('div');
+            gradient.className = 'absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_50%,hsl(var(--primary)/0.15),transparent)]';
+            
+            bgContainer.appendChild(svg1);
+            bgContainer.appendChild(svg2);
+            bgContainer.appendChild(gradient);
+        }
+
+        // Funciones de la app
+        function callTaxi() {
+            playSound('click');
+        }
+
+        function openWhatsApp() {
+            playSound('click');
+        }
+
+        function handleShare() {
+            playSound('click');
+            const currentUrl = window.location.href;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: `${appConfig.appName} - ${appConfig.appSlogan}`,
+                    text: appConfig.shareMessage,
+                    url: currentUrl
+                }).catch(error => {
+                    console.error('Error sharing:', error);
+                    copyToClipboard(currentUrl);
+                });
+            } else {
+                copyToClipboard(currentUrl);
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Enlace copiado al portapapeles', 'success');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                showToast('Error al copiar el enlace', 'error');
+            });
+        }
+
+        function playSound(sound) {
+            // Implementación básica de sonido
+            console.log(`Playing sound: ${sound}`);
+        }
+
+        // Manejo de modales
+        function openModal(modalId) {
+            playSound('open');
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            playSound('close');
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function toggleAccordion(index) {
+            const content = document.getElementById(`accordion-content-${index}`);
+            content.classList.toggle('show');
+        }
+
+        // Toast notifications
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastContent = document.getElementById('toast-content');
+            
+            toast.className = 'toast ' + type;
+            toastContent.textContent = message;
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // Manejo de fondos personalizados
+        function loadCustomBackground() {
+            const savedImage = localStorage.getItem('custom-background-image');
+            if (savedImage) {
+                applyCustomBackground(savedImage);
+                document.getElementById('remove-image-btn').style.display = 'block';
+            }
+        }
+
+        function applyCustomBackground(imageUrl) {
+            const bgElement = document.getElementById('futuristic-bg');
+            if (bgElement && imageUrl) {
+                // Limpiar contenido existente
+                bgElement.innerHTML = '';
+                
+                // Agregar imagen de fondo
+                const imageOverlay = document.createElement('div');
+                imageOverlay.className = 'absolute inset-0 bg-cover bg-center';
+                imageOverlay.style.backgroundImage = `url(${imageUrl})`;
+                
+                const darkOverlay = document.createElement('div');
+                darkOverlay.className = 'absolute inset-0 bg-black/50';
+                
+                bgElement.appendChild(imageOverlay);
+                bgElement.appendChild(darkOverlay);
+                
+                // Recrear elementos SVG
+                createFuturisticBackground();
+            }
+        }
+
+        function uploadImage() {
+            const fileInput = document.getElementById('background-upload');
+            const file = fileInput.files[0];
+            
+            if (file) {
+                if (!file.type.startsWith('image/')) {
+                    showToast('Por favor, selecciona un archivo de imagen.', 'error');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const dataUrl = e.target?.result;
+                    localStorage.setItem('custom-background-image', dataUrl);
+                    applyCustomBackground(dataUrl);
+                    document.getElementById('remove-image-btn').style.display = 'block';
+                    closeModal('image-manager-modal');
+                    showToast('Fondo personalizado aplicado', 'success');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                showToast('Por favor selecciona una imagen', 'error');
+            }
+        }
+
+        function removeImage() {
+            localStorage.removeItem('custom-background-image');
+            const bgElement = document.getElementById('futuristic-bg');
+            if (bgElement) {
+                // Restaurar fondo original
+                bgElement.innerHTML = '';
+                bgElement.className = 'futuristic-bg';
+                createFuturisticBackground();
+            }
+            document.getElementById('remove-image-btn').style.display = 'none';
+            closeModal('image-manager-modal');
+            showToast('Fondo restaurado', 'success');
+        }
+
+        // Manejo de temas
+        function applyTheme(theme) {
+            const root = document.documentElement;
+            const { h, s, l } = theme.primary;
+            
+            root.style.setProperty('--primary', `${h} ${s}% ${l}%`);
+            root.style.setProperty('--accent', `${h} ${s}% ${l}%`);
+            root.style.setProperty('--ring', `${h} ${s}% ${l+10}%`);
+            
+            // Actualizar indicadores visuales
+            themes.forEach((t, index) => {
+                const check = document.getElementById(`check-${index}`);
+                if (check) {
+                    check.style.display = t.name === theme.name ? 'inline' : 'none';
+                }
+            });
+            
+            localStorage.setItem('app-theme', theme.name);
+        }
+
+        function handleThemeSelect(theme) {
+            applyTheme(theme);
+            showToast(`Tema ${theme.name} aplicado`, 'success');
+        }
+
+        // Manejo de temas claro/oscuro
+        function setTheme(theme) {
+            const root = document.documentElement;
+            if (theme === 'auto') {
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    root.classList.add('dark');
+                } else {
+                    root.classList.remove('dark');
+                }
+            } else if (theme === 'dark') {
+                root.classList.add('dark');
+            } else {
+                root.classList.remove('dark');
+            }
+            localStorage.setItem('color-theme', theme);
+            closeModal('theme-switcher-modal');
+            showToast(`Tema ${theme} aplicado`, 'success');
+        }
+    </script>
+</body>
+</html>
