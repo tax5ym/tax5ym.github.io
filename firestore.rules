@@ -1,0 +1,52 @@
+/**
+ * @description This ruleset provides public read access to app configuration, usage guides, and share information for the TAX5 application. Write access is denied to all clients, including authenticated users, to protect the integrity of the application's configuration and documentation.
+ * @dataStructure The database consists of three top-level collections: 'app_configuration', 'usage_guides', and 'share_information'. Each collection stores documents of the corresponding entity type, identified by a unique document ID.
+ * @keySecurityDecisions Public read access is enabled for all collections to allow any client to fetch app configuration, usage guides, and share information. Write access is strictly prohibited to prevent unauthorized modifications. No user-specific data or authorization logic is implemented, as the application does not have user accounts or collaborative features.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Allows public read access to application configuration settings. Write access is denied to all clients.
+     * @path /app_configuration/{appConfigurationId}
+     * @allow (get, list) - Any user can read the app configuration.
+     * @deny (create, update, delete) - No user can modify the app configuration.
+     * @principle Public read access with no write access to protect app configuration data.
+     */
+    match /app_configuration/{appConfigurationId} {
+      allow get, list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Allows public read access to usage guide entries. Write access is denied to all clients.
+     * @path /usage_guides/{usageGuideId}
+     * @allow (get, list) - Any user can read the usage guides.
+     * @deny (create, update, delete) - No user can modify the usage guides.
+     * @principle Public read access with no write access to protect usage guide data.
+     */
+    match /usage_guides/{usageGuideId} {
+      allow get, list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Allows public read access to share information. Write access is denied to all clients.
+     * @path /share_information/{shareInformationId}
+     * @allow (get, list) - Any user can read the share information.
+     * @deny (create, update, delete) - No user can modify the share information.
+     * @principle Public read access with no write access to protect share information data.
+     */
+    match /share_information/{shareInformationId} {
+      allow get, list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}
